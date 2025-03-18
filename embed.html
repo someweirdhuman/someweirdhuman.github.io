@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Player</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #181818;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+        video {
+            width: 80%;
+            max-width: 800px;
+            border: 2px solid white;
+            border-radius: 8px;
+        }
+        input {
+            margin-top: 10px;
+            padding: 5px;
+            width: 80%;
+            max-width: 800px;
+        }
+        button {
+            margin-top: 5px;
+            padding: 8px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <video id="videoPlayer" controls>
+        <source id="videoSource" src="" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    <input type="text" id="videoInput" placeholder="Paste .mp4 link here...">
+    <button onclick="loadVideo()">Load Video</button>
+    
+    <script>
+        function loadVideo() {
+            const videoInput = document.getElementById('videoInput').value;
+            const videoSource = document.getElementById('videoSource');
+            const videoPlayer = document.getElementById('videoPlayer');
+            
+            if (videoInput) {
+                videoSource.src = videoInput;
+                videoPlayer.load();
+                window.location.hash = encodeURIComponent(videoInput);
+            }
+        }
+        
+        window.onload = function() {
+            const hash = decodeURIComponent(window.location.hash.substring(1));
+            if (hash) {
+                document.getElementById('videoInput').value = hash;
+                document.getElementById('videoSource').src = hash;
+                document.getElementById('videoPlayer').load();
+            }
+        };
+    </script>
+</body>
+</html>
